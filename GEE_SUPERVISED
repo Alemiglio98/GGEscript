@@ -1,0 +1,23 @@
+\\supervised classification
+
+var L8: imagecollection "USGS Landsat 8 Collection 2 Tier 1 TOA Reflectance"
+var Geometry: multipoint
+var selection = L8.filterBounds(Geometry)'
+                  .filterDate('2022-01-01','2022-31-12')
+                  .filterMetadata('CLOUD-COVER', 'less_than', 1)
+                  .mean() \\take a mean value to reduce reflactance differencies between different detected imagies
+Map.addLayer(selection, {bands:["B4", "B3", "B2"]})
+\\ at this point generate training sites and classes (for example water, vegetation and soil)
+
+var training_points = water.merge(vegetation).merge(soil)
+\\tool to get a spectral value table
+var training_data = selection.sampleRegion({
+ collection: training_points,
+ proprierties:['LC'],
+ scale: 30
+ })
+print(training_data)  // then you'll get specrtal value for each point
+
+
+
+
