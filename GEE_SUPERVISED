@@ -16,7 +16,19 @@ var training_data = selection.sampleRegion({
  proprierties:['LC'],
  scale: 30
  })
-print(training_data)  // then you'll get specrtal value for each point
+print(training_data)  \\ then you'll get specrtal value for each point
+
+\\ classify
+var classifier = ee.Classifier.cart() 
+classifier = classifier.train({
+  features: training data,
+  classProperty: "LC"
+  inputProperties: ["B1", "B2", "B3", "B4","B5","B6","B7","B8","B9","B10","B11"] 
+})
+  \\print(classifier) to get class infos
+var classified_image =selectio.classify(classifier)
+Map.addLayer(classified_image, {palette:["0049bf","07c46f","ddd60b","c91700"]}, min:0, max:3)
+
 
 
 
