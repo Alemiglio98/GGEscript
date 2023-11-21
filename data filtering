@@ -1,0 +1,13 @@
+\\ GEE filtering and displaying satellite data
+
+var L8: imagecollecrion  Landsat8 
+var Geometry :Polygon
+
+
+var filtered_region = L8.filterBounds(geometry);
+var filtered_meta_reg = filtered_region.filterMetadata('CLOUD_COVER','less_than',1);
+var filtered_date = filtered_meta_reg.filterDate('2022-01-01','2022-12-31')
+
+
+var Median_image = filtered_region.median();
+Map.addLayer(Median_image)
